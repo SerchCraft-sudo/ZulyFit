@@ -154,6 +154,13 @@
       <div><strong id="trainerMotionLabel">Movimiento controlado</strong><p id="trainerExerciseTip" class="hint">Sigue el movimiento con calma.</p></div>
       <div class="trainer-choices compact"><button type="button" class="trainer-choice" data-trainer-choice="female">♀ <small>Ella</small></button><button type="button" class="trainer-choice" data-trainer-choice="male">♂ <small>Él</small></button></div>
     </div>
+    <div class="trainer-playback">
+      <button type="button" class="button button-outline" id="trainerPause">Ⅱ Pausar</button>
+      <button type="button" class="button button-outline" id="trainerRestart">↻ Reiniciar</button>
+      <label class="trainer-speed-label" for="trainerSpeed">Velocidad
+        <select id="trainerSpeed"><option value=".65">Lenta</option><option value="1" selected>Normal</option><option value="1.35">Rápida</option></select>
+      </label>
+    </div>
     <p class="trainer-disclaimer">Animación orientativa: adapta el rango a tu comodidad y detente si sientes dolor.</p>
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>

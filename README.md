@@ -39,3 +39,7 @@ Las tarjetas incluyen iconos animados como apoyo visual y texto de técnica. No 
 
 ## Entrenadores virtuales 3D
 La biblioteca incluye una guía visual 3D procedural con selección de entrenadora o entrenador. En cada ejercicio aparece el botón **Ver demostración 3D**; durante una rutina también aparece **Ver guía 3D**. La selección se conserva en el navegador. La escena utiliza Three.js desde jsDelivr, por lo que la primera carga de las demostraciones requiere conexión a internet. Las animaciones son demostrativas y no sustituyen indicaciones profesionales de técnica.
+
+
+## Guía 3D animada
+La demostración usa Three.js desde CDN; requiere conexión a internet y abrirse mediante GitHub Pages o un servidor local (no directamente desde el archivo ZIP). Incluye movimientos articulados orientativos y controles de pausa, reinicio y velocidad.
