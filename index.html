@@ -28,6 +28,7 @@
     <nav class="tabs" aria-label="Secciones">
       <button class="tab active" data-view="home">Inicio</button>
       <button class="tab" data-view="routines">Rutinas</button>
+      <button class="tab" data-view="library">Ejercicios</button>
       <button class="tab" data-view="calendar">Calendario</button>
       <button class="tab" data-view="progress">Progreso</button>
       <button class="tab" data-view="settings">Ajustes</button>
@@ -44,6 +45,13 @@
     <section id="routinesView" class="view hidden">
       <div class="section-heading"><div><p class="eyebrow">PERSONALIZA TU PLAN</p><h2>Tus rutinas</h2></div><button id="addRoutineBtn" class="button">＋ Nueva rutina</button></div>
       <div id="routineList" class="routine-list"></div>
+    </section>
+
+    <section id="libraryView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">MUÉVETE A TU MANERA</p><h2>Biblioteca de ejercicios</h2></div><span class="pill" id="exerciseCount">50 ejercicios</span></div>
+      <p class="muted library-intro">Explora los movimientos, consulta indicaciones y añádelos a cualquiera de tus rutinas.</p>
+      <div class="library-tools"><input id="exerciseSearch" type="search" placeholder="Buscar ejercicio…" aria-label="Buscar ejercicio"><select id="exerciseFilter" aria-label="Filtrar por grupo"><option value="Todos">Todos los grupos</option><option>Piernas</option><option>Glúteos</option><option>Brazos</option><option>Hombros</option><option>Pecho</option><option>Espalda</option><option>Abdomen</option><option>Movilidad</option><option>Cardio suave</option></select></div>
+      <div id="exerciseLibrary" class="exercise-library"></div>
     </section>
 
     <section id="calendarView" class="view hidden">
@@ -73,6 +81,19 @@
       <div class="panel">
         <label for="nameInput">¿Cómo te llamamos?</label>
         <input id="nameInput" maxlength="24" placeholder="Tu nombre">
+        <div class="theme-section">
+          <h3>Personaliza los colores</h3>
+          <p class="hint">Elige el estilo que más te guste. Se guardará automáticamente en este dispositivo.</p>
+          <div class="theme-grid" id="themeGrid">
+            <button type="button" class="theme-choice" data-theme-choice="rosa"><span class="theme-swatch swatch-rosa"></span>Rosa</button>
+            <button type="button" class="theme-choice" data-theme-choice="morado"><span class="theme-swatch swatch-morado"></span>Morado</button>
+            <button type="button" class="theme-choice" data-theme-choice="naranja"><span class="theme-swatch swatch-naranja"></span>Naranja</button>
+            <button type="button" class="theme-choice" data-theme-choice="azul"><span class="theme-swatch swatch-azul"></span>Azul</button>
+            <button type="button" class="theme-choice" data-theme-choice="blanco"><span class="theme-swatch swatch-blanco"></span>Blanco</button>
+            <button type="button" class="theme-choice" data-theme-choice="negro"><span class="theme-swatch swatch-negro"></span>Negro</button>
+          </div>
+          <label for="customAccent">Color personalizado</label><div class="custom-color-row"><input id="customAccent" type="color" value="#f04491"><button type="button" id="applyCustomTheme" class="button button-outline">Aplicar color</button></div>
+        </div>
         <label for="reminderInput">Hora sugerida para tu recordatorio</label>
         <input id="reminderInput" type="time">
         <p class="hint">La hora queda guardada como preferencia. Esta versión no envía notificaciones automáticas.</p>
@@ -96,6 +117,16 @@
       <div id="exerciseEditor"></div>
       <button type="button" id="addExerciseBtn" class="button button-outline full">＋ Añadir ejercicio</button>
       <div class="dialog-actions"><button class="button button-outline" value="cancel">Cancelar</button><button id="saveRoutineBtn" class="button" value="save">Guardar</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="addToRoutineDialog" class="dialog">
+    <form method="dialog" id="addToRoutineForm">
+      <div class="dialog-head"><h2>Añadir ejercicio</h2><button class="icon-button" value="cancel" aria-label="Cerrar">×</button></div>
+      <p id="pickedExerciseName" class="muted"></p>
+      <label for="targetRoutine">¿A qué rutina lo añadimos?</label><select id="targetRoutine" class="dialog-select"></select>
+      <label for="pickedExerciseDetail">Series y repeticiones / tiempo</label><input id="pickedExerciseDetail" value="3 series · 10 repeticiones">
+      <div class="dialog-actions"><button class="button button-outline" value="cancel">Cancelar</button><button id="confirmAddExercise" class="button" value="add">Añadir</button></div>
     </form>
   </dialog>
 

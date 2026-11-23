@@ -1,21 +1,92 @@
 const $ = s => document.querySelector(s);
 const todayKey = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+const exerciseLibrary = [
+  ["Sentadilla","Piernas","3 series · 10–12 repeticiones","Flexiona caderas y rodillas con el pecho erguido; baja solo hasta donde sea cómodo.","Sin equipo","🧍"],
+  ["Sentadilla a silla","Piernas","3 series · 10 repeticiones","Lleva la cadera hacia atrás hasta tocar suavemente una silla y vuelve a subir.","Silla","🪑"],
+  ["Sentadilla sumo","Piernas","2 series · 10 repeticiones","Coloca los pies algo más separados y dirige las rodillas hacia la línea de los pies.","Sin equipo","🧍"],
+  ["Zancada hacia atrás","Piernas","2 series · 8 por lado","Da un paso atrás y flexiona ambas rodillas de forma controlada.","Sin equipo","🚶"],
+  ["Elevación de pantorrillas","Piernas","3 series · 12 repeticiones","Eleva los talones lentamente y baja con control, usando una pared como apoyo si lo necesitas.","Pared opcional","🦶"],
+  ["Step-up bajo","Piernas","2 series · 8 por lado","Sube a un escalón bajo y estable, alternando las piernas.","Escalón estable","🪜"],
+  ["Puente de glúteos","Glúteos","3 series · 12 repeticiones","Acostada boca arriba, eleva la pelvis sin arquear excesivamente la espalda.","Tapete opcional","🌉"],
+  ["Puente de glúteos con pausa","Glúteos","2 series · 10 repeticiones","Mantén una pausa breve arriba y baja lentamente.","Tapete opcional","🌉"],
+  ["Patada de glúteo","Glúteos","2 series · 10 por lado","En cuatro apoyos, lleva un talón hacia atrás sin girar la cadera.","Tapete","🐾"],
+  ["Abducción de cadera acostada","Glúteos","2 series · 12 por lado","De lado, eleva la pierna superior sin rotar el tronco.","Tapete","↗"],
+  ["Clamshell","Glúteos","2 series · 12 por lado","De lado y con rodillas flexionadas, abre la rodilla superior manteniendo los pies juntos.","Tapete","🐚"],
+  ["Peso muerto rumano ligero","Piernas","2 series · 10 repeticiones","Lleva la cadera atrás con espalda neutra y rodillas ligeramente flexionadas.","Mancuernas opcionales","🏋️"],
+  ["Curl de bíceps","Brazos","2 series · 10 repeticiones","Flexiona los codos manteniéndolos cerca del cuerpo.","Mancuernas o botellas","💪"],
+  ["Curl martillo","Brazos","2 series · 10 repeticiones","Sube las manos con las palmas enfrentadas y controla la bajada.","Mancuernas o botellas","💪"],
+  ["Extensión de tríceps","Brazos","2 series · 10 repeticiones","Extiende los codos de manera controlada, sin forzar la articulación.","Botella ligera opcional","💪"],
+  ["Flexiones en pared","Brazos","2 series · 10 repeticiones","Apoya las manos en la pared y acerca el pecho flexionando los codos.","Pared","🧱"],
+  ["Flexiones inclinadas","Brazos","2 series · 6–10 repeticiones","Apoya las manos en una superficie firme y estable; mantén el cuerpo alineado.","Mesa firme o pared","↘"],
+  ["Fondos de tríceps asistidos","Brazos","2 series · 6–8 repeticiones","Opción alternativa: extensión de tríceps de pie si la silla no es estable.","Superficie estable","🪑"],
+  ["Press de hombros","Hombros","2 series · 10 repeticiones","Empuja las manos hacia arriba sin arquear la espalda.","Mancuernas ligeras opcionales","🙆"],
+  ["Elevación lateral","Hombros","2 series · 10 repeticiones","Eleva los brazos hacia los lados hasta una altura cómoda.","Sin equipo o peso ligero","🪽"],
+  ["Círculos de hombros","Hombros","30 segundos","Haz círculos pequeños y controlados hacia delante y atrás.","Sin equipo","🔄"],
+  ["Toques de hombro","Hombros","2 series · 8 por lado","Desde una posición estable, toca el hombro contrario sin balancear la cadera.","Pared o apoyo elevado","👋"],
+  ["Flexión escapular en pared","Hombros","2 series · 10 repeticiones","Con brazos extendidos en pared, separa y acerca suavemente los omóplatos.","Pared","🧱"],
+  ["Press de pecho en el suelo","Pecho","2 series · 10 repeticiones","Acostada, empuja las manos hacia arriba y baja hasta una posición cómoda.","Mancuernas ligeras opcionales","⬆"],
+  ["Apertura de pecho en el suelo","Pecho","2 series · 8 repeticiones","Abre los brazos con control y evita bajar más allá de tu rango cómodo.","Peso ligero opcional","👐"],
+  ["Flexión de rodillas","Pecho","2 series · 6–8 repeticiones","Desde rodillas, mantén el tronco alineado y usa un rango cómodo.","Tapete","↘"],
+  ["Remo con mancuerna","Espalda","2 series · 10 por lado","Apoya una mano y lleva el codo hacia atrás sin girar el torso.","Mancuerna o botella","🚣"],
+  ["Remo inclinado","Espalda","2 series · 10 repeticiones","Inclina el torso desde la cadera y lleva los codos hacia atrás.","Mancuernas ligeras opcionales","🚣"],
+  ["Bird dog","Espalda","2 series · 8 por lado","En cuatro apoyos, extiende brazo y pierna contrarios manteniendo la pelvis estable.","Tapete","🐕"],
+  ["Ángeles en pared","Espalda","2 series · 8 repeticiones","Desliza los brazos por la pared sin forzar hombros ni espalda.","Pared","🪽"],
+  ["Superman suave","Espalda","2 series · 8 repeticiones","Boca abajo, eleva ligeramente brazo y pierna contrarios o solo los brazos.","Tapete","🦸"],
+  ["Plancha","Abdomen","2 series · 15–25 segundos","Apoya antebrazos y rodillas o pies; mantén una línea cómoda.","Tapete","〰"],
+  ["Plancha lateral con rodillas","Abdomen","2 series · 15 segundos por lado","Apoya antebrazo y rodillas, elevando suavemente la cadera.","Tapete","〰"],
+  ["Dead bug","Abdomen","2 series · 8 por lado","Boca arriba, alterna brazo y pierna contrarios sin despegar la zona lumbar.","Tapete","🐞"],
+  ["Crunch corto","Abdomen","2 series · 8 repeticiones","Eleva suavemente cabeza y hombros; no tires del cuello.","Tapete","↗"],
+  ["Marcha de rodillas","Abdomen","2 series · 30 segundos","Alterna elevaciones de rodilla con el tronco erguido.","Sin equipo","🚶"],
+  ["Toques de talón","Abdomen","2 series · 10 por lado","Boca arriba, acerca una mano al talón del mismo lado con movimiento corto.","Tapete","👣"],
+  ["Gato-vaca","Movilidad","6–8 repeticiones","Alterna redondear y extender suavemente la espalda al ritmo de la respiración.","Tapete","🐈"],
+  ["Rotación torácica","Movilidad","6 por lado","En cuatro apoyos, lleva una mano hacia el techo siguiendo la mirada.","Tapete","🔄"],
+  ["Estiramiento de flexor de cadera","Movilidad","20 segundos por lado","En posición de zancada cómoda, lleva la pelvis suavemente hacia delante.","Tapete","🧘"],
+  ["Estiramiento de pecho","Movilidad","20 segundos","Apoya el antebrazo en una pared y gira suavemente el torso.","Pared","👐"],
+  ["Postura del niño","Movilidad","20–30 segundos","Lleva la cadera hacia los talones y extiende los brazos sin forzar.","Tapete","🧘"],
+  ["Círculos de tobillo","Movilidad","10 por lado","Haz círculos lentos con cada tobillo.","Sin equipo","🔄"],
+  ["Marcha en el sitio","Cardio suave","1 minuto","Camina en el mismo lugar a un ritmo cómodo.","Sin equipo","🚶"],
+  ["Paso lateral","Cardio suave","1 minuto","Da pasos de lado a lado con rodillas relajadas.","Sin equipo","↔"],
+  ["Talones a glúteos suave","Cardio suave","30 segundos","Alterna llevar el talón hacia atrás sin necesidad de correr.","Sin equipo","🏃"],
+  ["Boxeo al aire suave","Cardio suave","30–45 segundos","Alterna golpes al aire controlados, sin bloquear los codos.","Sin equipo","🥊"],
+  ["Paso toque","Cardio suave","1 minuto","Da un paso lateral y junta el otro pie, alternando lados.","Sin equipo","🎵"],
+  ["Respiración y movilidad","Movilidad","1 minuto","Respira con calma mientras mueves hombros y brazos suavemente.","Sin equipo","🌿"],
+  ["Elevación de rodillas sentado","Cardio suave","30 segundos","Sentada en una silla estable, alterna elevar las rodillas.","Silla","🪑"]
+].map((x,i)=>({id:`lib-${i+1}`,name:x[0],group:x[1],detail:x[2],description:x[3],equipment:x[4],icon:x[5]}));
+const themePresets = {
+  rosa:{accent:"#f04491",accent2:"#ff83b8",bg:"#101014",panel:"#19191f",panel2:"#22222a",text:"#f7f4f7",muted:"#aaa5af",line:"#34313b",glow:"#32182b"},
+  morado:{accent:"#a66af5",accent2:"#c49aff",bg:"#100d17",panel:"#1c1727",panel2:"#292137",text:"#f8f5ff",muted:"#b5abc4",line:"#40344f",glow:"#34204c"},
+  naranja:{accent:"#f28a35",accent2:"#ffb36f",bg:"#15100c",panel:"#241a14",panel2:"#322319",text:"#fff7ef",muted:"#c0aa98",line:"#493426",glow:"#4a2a13"},
+  azul:{accent:"#4b91f1",accent2:"#86b8ff",bg:"#0c111b",panel:"#151e2d",panel2:"#202c3e",text:"#f2f7ff",muted:"#a5b5ca",line:"#304158",glow:"#172f52"},
+  blanco:{accent:"#555b68",accent2:"#303642",bg:"#f1f2f5",panel:"#ffffff",panel2:"#e7e9ee",text:"#20232b",muted:"#626875",line:"#d3d6de",glow:"#e1e4eb"},
+  negro:{accent:"#a3a3a3",accent2:"#d4d4d4",bg:"#050505",panel:"#111111",panel2:"#1c1c1c",text:"#f5f5f5",muted:"#a1a1aa",line:"#303030",glow:"#202020"}
+};
+
 const defaultData = () => ({
-  name:"Zuly", reminder:"18:00", sessions:[],
+  name:"Zuly", reminder:"18:00", theme:"rosa", customAccent:"", sessions:[],
   routines:[
     {id:uid(),name:"Brazos + abdomen",focus:"Tren superior y zona media",emoji:"✦",minutes:25,exercises:[{name:"Flexiones inclinadas",detail:"8–10 repeticiones"},{name:"Fondos en silla (opcional)",detail:"8 repeticiones"},{name:"Plancha",detail:"20 segundos"},{name:"Dead bug",detail:"10 por lado"}]},
     {id:uid(),name:"Glúteos + piernas",focus:"Fuerza y estabilidad",emoji:"♡",minutes:25,exercises:[{name:"Sentadillas",detail:"12 repeticiones"},{name:"Puente de glúteos",detail:"15 repeticiones"},{name:"Zancadas hacia atrás",detail:"8 por lado"},{name:"Elevación de pantorrillas",detail:"15 repeticiones"}]},
-    {id:uid(),name:"Brazos + abdomen",focus:"Control y técnica",emoji:"⚡",minutes:25,exercises:[{name:"Flexiones en pared",detail:"12 repeticiones"},{name:"Toques de hombro",detail:"10 por lado"},{name:"Bird dog",detail:"10 por lado"},{name:"Plancha lateral con rodillas",detail:"15 segundos por lado"}]},
-    {id:uid(),name:"Cuerpo completo",focus:"Movimiento suave",emoji:"✧",minutes:30,exercises:[{name:"Marcha en el sitio",detail:"1 minuto"},{name:"Sentadilla a silla",detail:"12 repeticiones"},{name:"Puente de glúteos",detail:"12 repeticiones"},{name:"Dead bug",detail:"8 por lado"},{name:"Estiramiento cómodo",detail:"1 minuto"}]}
+    {id:uid(),name:"Brazos + abdomen · control",focus:"Control y técnica",emoji:"⚡",minutes:25,exercises:[{name:"Flexiones en pared",detail:"12 repeticiones"},{name:"Toques de hombro",detail:"10 por lado"},{name:"Bird dog",detail:"10 por lado"},{name:"Plancha lateral con rodillas",detail:"15 segundos por lado"}]},
+    {id:uid(),name:"Cuerpo completo",focus:"Movimiento suave",emoji:"✧",minutes:30,exercises:[{name:"Marcha en el sitio",detail:"1 minuto"},{name:"Sentadilla a silla",detail:"12 repeticiones"},{name:"Puente de glúteos",detail:"12 repeticiones"},{name:"Dead bug",detail:"8 por lado"},{name:"Estiramiento cómodo",detail:"1 minuto"}]},
+    {id:uid(),name:"Espalda + postura",focus:"Movilidad y control",emoji:"🪽",minutes:20,exercises:[{name:"Remo con mancuerna",detail:"2 series · 10 por lado"},{name:"Bird dog",detail:"2 series · 8 por lado"},{name:"Ángeles en pared",detail:"2 series · 8 repeticiones"},{name:"Gato-vaca",detail:"6–8 repeticiones"}]},
+    {id:uid(),name:"Movilidad suave",focus:"Moverte con comodidad",emoji:"🌿",minutes:15,exercises:[{name:"Gato-vaca",detail:"6–8 repeticiones"},{name:"Rotación torácica",detail:"6 por lado"},{name:"Estiramiento de pecho",detail:"20 segundos"},{name:"Postura del niño",detail:"20 segundos"}]},
+    {id:uid(),name:"Cardio ligero",focus:"Actividad a ritmo cómodo",emoji:"🎵",minutes:15,exercises:[{name:"Marcha en el sitio",detail:"1 minuto"},{name:"Paso lateral",detail:"1 minuto"},{name:"Paso toque",detail:"1 minuto"},{name:"Respiración y movilidad",detail:"1 minuto"}]},
+    {id:uid(),name:"Pecho + hombros",focus:"Tren superior",emoji:"✦",minutes:20,exercises:[{name:"Flexiones en pared",detail:"2 series · 10 repeticiones"},{name:"Press de pecho en el suelo",detail:"2 series · 10 repeticiones"},{name:"Elevación lateral",detail:"2 series · 10 repeticiones"},{name:"Círculos de hombros",detail:"30 segundos"}]}
   ]
 });
 function uid(){return Math.random().toString(36).slice(2,10)}
 let data; try{data=JSON.parse(localStorage.getItem("zulyfit-data"))||defaultData()}catch{data=defaultData()}
+if(!data.theme)data.theme="rosa";if(!Array.isArray(data.routines))data.routines=[];if(!Array.isArray(data.sessions))data.sessions=[];
+// Actualiza instalaciones anteriores sin borrar rutinas ni sesiones del usuario.
+const starterRoutines=defaultData().routines;starterRoutines.forEach(r=>{if(!data.routines.some(existing=>existing.name===r.name))data.routines.push(r)});
 function save(){localStorage.setItem("zulyfit-data",JSON.stringify(data))}
+function applyTheme(){const key=themePresets[data.theme]?data.theme:"rosa",t={...themePresets[key]};if(data.customAccent){t.accent=data.customAccent;t.accent2=data.customAccent}const root=document.documentElement;Object.entries(t).forEach(([k,v])=>root.style.setProperty(`--${k}`,v));document.body.dataset.theme=key;document.querySelector('meta[name="theme-color"]').setAttribute("content",t.accent);document.querySelectorAll("[data-theme-choice]").forEach(b=>b.classList.toggle("selected",b.dataset.themeChoice===key&&!data.customAccent));}
+function setTheme(key){data.theme=key;data.customAccent="";save();applyTheme();renderSettings();toast(`Tema ${key} aplicado ♥`)}
 function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2300)}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function dateLabel(s){return new Date(s+"T12:00:00").toLocaleDateString("es-MX",{day:"numeric",month:"short",year:"numeric"})}
-function showView(name){document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));$("#"+name+"View").classList.remove("hidden");document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.view===name));if(name==="home")renderHome();if(name==="routines")renderRoutines();if(name==="calendar")renderCalendar();if(name==="progress")renderProgress();if(name==="settings")renderSettings()}
+function showView(name){document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));$("#"+name+"View").classList.remove("hidden");document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.view===name));if(name==="home")renderHome();if(name==="routines")renderRoutines();if(name==="library")renderLibrary();if(name==="calendar")renderCalendar();if(name==="progress")renderProgress();if(name==="settings")renderSettings()}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
 function routineCard(r){return `<article class="routine-card"><div class="routine-top"><span class="routine-emoji">${r.emoji||"♡"}</span><span class="pill">${r.exercises.length} ejercicios</span></div><h3>${esc(r.name)}</h3><p>${esc(r.focus||"A tu ritmo")}</p><div class="routine-meta"><span>◷ ${r.minutes||20} min aprox.</span><span>Sin equipo</span></div><button class="button full" data-start="${r.id}">Comenzar rutina</button></article>`}
 function renderHome(){ $("#helloName").textContent=data.name||"Zuly";$("#homeRoutines").innerHTML=data.routines.map(routineCard).join("");$("#weekCount").textContent=`${countWeek()} sesiones`;const now=new Date(),day=now.getDay(),monday=new Date(now);monday.setDate(now.getDate()-(day+6)%7);$("#weekStrip").innerHTML=Array.from({length:7},(_,i)=>{let d=new Date(monday);d.setDate(monday.getDate()+i);let key=todayKey(d),done=data.sessions.some(s=>s.date===key);return `<div class="day-chip ${done?"done":""}">${["L","M","X","J","V","S","D"][i]}<strong>${d.getDate()}</strong>${done?"♥":"·"}</div>`}).join("");}
@@ -26,7 +97,7 @@ function addExerciseRow(ex={name:"",detail:""}){const wrap=document.createElemen
 $("#addRoutineBtn").onclick=()=>openRoutine();$("#addExerciseBtn").onclick=()=>addExerciseRow();
 $("#saveRoutineBtn").onclick=e=>{e.preventDefault();const name=$("#routineName").value.trim();if(!name){toast("Ponle un nombre a tu rutina");return}const exercises=[...$("#exerciseEditor").querySelectorAll(".exercise-edit")].map(row=>({name:row.children[0].value.trim(),detail:row.children[1].value.trim()})).filter(x=>x.name);if(!exercises.length){toast("Añade al menos un ejercicio");return}const obj={id:editingId||uid(),name,focus:$("#routineFocus").value.trim(),emoji:"♡",minutes:Math.max(10,exercises.length*6),exercises};if(editingId)data.routines=data.routines.map(r=>r.id===editingId?obj:r);else data.routines.push(obj);save();$("#routineDialog").close();renderRoutines();renderHome();toast("Rutina guardada ♥")};
 let activeRoutine=null,completed=new Set(),timerInterval=null,timerSeconds=30;
-function startSession(id){activeRoutine=data.routines.find(r=>r.id===id);if(!activeRoutine)return;completed=new Set();$("#sessionTitle").textContent=activeRoutine.name;$("#sessionExercises").innerHTML=activeRoutine.exercises.map((x,i)=>`<label class="session-exercise"><input type="checkbox" data-check="${i}"><div><strong>${esc(x.name)}</strong><p>${esc(x.detail||"Hazlo con calma y buena técnica")}</p></div></label>`).join("");document.querySelectorAll("[data-check]").forEach(c=>c.onchange=()=>{c.checked?completed.add(+c.dataset.check):completed.delete(+c.dataset.check);updateSessionProgress()});timerSeconds=30;updateTimer();$("#sessionDialog").showModal();updateSessionProgress()}
+function startSession(id){activeRoutine=data.routines.find(r=>r.id===id);if(!activeRoutine)return;completed=new Set();$("#sessionTitle").textContent=activeRoutine.name;$("#sessionExercises").innerHTML=activeRoutine.exercises.map((x,i)=>`<label class="session-exercise"><input type="checkbox" data-check="${i}"><div class="session-exercise-info"><strong>${esc(x.name)}</strong><p>${esc(x.detail||"Hazlo con calma y buena técnica")}</p><span class="session-tip">Movimiento controlado · respira con naturalidad</span></div></label>`).join("");document.querySelectorAll("[data-check]").forEach(c=>c.onchange=()=>{c.checked?completed.add(+c.dataset.check):completed.delete(+c.dataset.check);updateSessionProgress()});timerSeconds=30;updateTimer();$("#sessionDialog").showModal();updateSessionProgress()}
 function updateSessionProgress(){const total=activeRoutine?.exercises.length||0;$("#sessionCount").textContent=`${completed.size} de ${total} ejercicios completados`;$("#sessionBar").style.width=(total?completed.size/total*100:0)+"%"}
 function updateTimer(){$("#timerDisplay").textContent=`${String(Math.floor(timerSeconds/60)).padStart(2,"0")}:${String(timerSeconds%60).padStart(2,"0")}`}
 $("#timerStart").onclick=()=>{if(timerInterval){clearInterval(timerInterval);timerInterval=null;$("#timerStart").textContent="Continuar";return}$("#timerStart").textContent="Pausar";timerInterval=setInterval(()=>{timerSeconds=Math.max(0,timerSeconds-1);updateTimer();if(timerSeconds===0){clearInterval(timerInterval);timerInterval=null;$("#timerStart").textContent="Iniciar";toast("¡Descanso terminado!")}},1000)};
@@ -40,13 +111,20 @@ function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getM
 function renderCalendarDetails(){const sessions=data.sessions.filter(s=>s.date===selectedDate);$("#calendarDetails").innerHTML=`<span class="note-icon">♡</span><div><strong>${dateLabel(selectedDate)}</strong>${sessions.length?sessions.map(s=>`<p>${esc(s.routine)} · ${s.minutes} min · ${s.completed}/${s.total} ejercicios</p>`).join(""):"<p>No hay sesiones guardadas este día. También está bien tomarte un descanso.</p>"}</div>`}
 $("#prevMonth").onclick=()=>{calendarDate.setMonth(calendarDate.getMonth()-1);renderCalendar()};$("#nextMonth").onclick=()=>{calendarDate.setMonth(calendarDate.getMonth()+1);renderCalendar()};
 function renderProgress(){$("#totalSessions").textContent=data.sessions.length;$("#thisWeek").textContent=countWeek();$("#totalMinutes").textContent=data.sessions.reduce((a,s)=>a+s.minutes,0);$("#historyList").innerHTML=data.sessions.slice(0,12).map(s=>`<div class="history-item"><div><strong>${esc(s.routine)}</strong><br><span>${dateLabel(s.date)} · ${s.completed}/${s.total} ejercicios</span></div><span>${s.minutes} min</span></div>`).join("")||'<p class="muted">Cuando guardes tu primera sesión, aparecerá aquí.</p>'}
-function renderSettings(){$("#nameInput").value=data.name||"";$("#reminderInput").value=data.reminder||"18:00"}
+function renderSettings(){$("#nameInput").value=data.name||"";$("#reminderInput").value=data.reminder||"18:00";$("#customAccent").value=data.customAccent||themePresets[data.theme]?.accent||"#f04491";applyTheme()}
+function renderLibrary(){const q=( $("#exerciseSearch").value||"").trim().toLocaleLowerCase("es");const group=$("#exerciseFilter").value;const items=exerciseLibrary.filter(x=>(group==="Todos"||x.group===group)&&(!q||`${x.name} ${x.group} ${x.description}`.toLocaleLowerCase("es").includes(q)));$("#exerciseCount").textContent=`${items.length} ejercicios`;$("#exerciseLibrary").innerHTML=items.map(x=>`<article class="exercise-card"><div class="exercise-visual"><span class="exercise-figure">${x.icon}</span><span class="motion-label">DEMOSTRACIÓN</span></div><div class="exercise-card-body"><span class="exercise-group">${esc(x.group)}</span><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p><div class="exercise-meta">${esc(x.detail)} · ${esc(x.equipment)}</div><button class="button button-outline full" data-pick-exercise="${x.id}">＋ Añadir a rutina</button></div></article>`).join("")||'<p class="muted">No encontramos ejercicios con esa búsqueda.</p>'}
+$("#exerciseSearch").addEventListener("input",renderLibrary);$("#exerciseFilter").addEventListener("change",renderLibrary);
+document.querySelectorAll("[data-theme-choice]").forEach(b=>b.addEventListener("click",()=>setTheme(b.dataset.themeChoice)));
+$("#applyCustomTheme").onclick=()=>{data.customAccent=$("#customAccent").value;save();applyTheme();toast("Color personalizado aplicado ♥")};
+let pickedExercise=null;
+function openAddExercise(id){pickedExercise=exerciseLibrary.find(x=>x.id===id);if(!pickedExercise)return;$("#pickedExerciseName").textContent=pickedExercise.name+" · "+pickedExercise.group;$("#targetRoutine").innerHTML=data.routines.map(r=>`<option value="${r.id}">${esc(r.name)}</option>`).join("");if(!data.routines.length){toast("Primero crea una rutina");return}$("#pickedExerciseDetail").value=pickedExercise.detail;$("#addToRoutineDialog").showModal()}
+$("#confirmAddExercise").onclick=e=>{e.preventDefault();const r=data.routines.find(x=>x.id===$("#targetRoutine").value);if(!r||!pickedExercise)return;r.exercises.push({name:pickedExercise.name,detail:$("#pickedExerciseDetail").value.trim()||pickedExercise.detail});r.minutes=Math.max(r.minutes||10,r.exercises.length*4);save();$("#addToRoutineDialog").close();renderLibrary();toast(`Añadido a ${r.name} ♥`)};
 $("#saveSettings").onclick=()=>{data.name=$("#nameInput").value.trim()||"Zuly";data.reminder=$("#reminderInput").value;save();renderHome();toast("Ajustes guardados ♥")};
 $("#exportBtn").onclick=()=>download(JSON.stringify(data,null,2),"zulyfit-respaldo.json","application/json");
 function download(content,name,type){const a=document.createElement("a"),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
 $("#importInput").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.routines)||!Array.isArray(d.sessions))throw Error();data=d;save();showView("home");toast("Respaldo importado ♥")}catch{toast("No se pudo leer ese archivo")}};
 $("#resetBtn").onclick=()=>{if(confirm("¿Restablecer rutinas y sesiones de ejemplo? Esta acción reemplaza los datos actuales.")){data=defaultData();save();showView("home");toast("Datos restablecidos")}};
-document.addEventListener("click",e=>{const start=e.target.closest("[data-start]");if(start)startSession(start.dataset.start);const edit=e.target.closest("[data-edit]");if(edit)openRoutine(edit.dataset.edit);const del=e.target.closest("[data-delete]");if(del&&confirm("¿Eliminar esta rutina?")){data.routines=data.routines.filter(r=>r.id!==del.dataset.delete);save();renderRoutines();renderHome()}const day=e.target.closest("[data-date]");if(day){selectedDate=day.dataset.date;renderCalendar()}});
-renderHome();
+document.addEventListener("click",e=>{const pick=e.target.closest("[data-pick-exercise]");if(pick)openAddExercise(pick.dataset.pickExercise);const start=e.target.closest("[data-start]");if(start)startSession(start.dataset.start);const edit=e.target.closest("[data-edit]");if(edit)openRoutine(edit.dataset.edit);const del=e.target.closest("[data-delete]");if(del&&confirm("¿Eliminar esta rutina?")){data.routines=data.routines.filter(r=>r.id!==del.dataset.delete);save();renderRoutines();renderHome()}const day=e.target.closest("[data-date]");if(day){selectedDate=day.dataset.date;renderCalendar()}});
+applyTheme();renderHome();
 if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./service-worker.js").catch(()=>{});
 let deferredPrompt=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;$("#installBtn").classList.remove("hidden")});$("#installBtn").onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$("#installBtn").classList.add("hidden")};

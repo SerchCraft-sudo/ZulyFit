@@ -1,26 +1,38 @@
-# ZulyFit
+# ZulyFit 2.0
 
-Aplicación web instalable (PWA) para rutinas en casa.
+Aplicación web instalable (PWA) para organizar rutinas en casa, consultar ejercicios y registrar sesiones.
+
+## Novedades de la versión 2.0
+- Biblioteca de 50 ejercicios con búsqueda y filtros por grupo muscular.
+- Indicaciones de ejecución, equipo opcional y una pequeña animación visual por ejercicio.
+- Añadir ejercicios de la biblioteca a cualquiera de las rutinas.
+- 8 rutinas prediseñadas y editables.
+- Seis temas: rosa, morado, naranja, azul, blanco y negro; además de un color personalizado.
+- El tema elegido y las preferencias se guardan localmente.
+- Las instalaciones anteriores incorporan las nuevas rutinas sin borrar las rutinas personalizadas ni las sesiones ya guardadas.
 
 ## Archivos
-- `index.html`: estructura de la aplicación.
-- `style.css`: diseño adaptable a móvil y computadora.
-- `app.js`: rutinas editables, sesiones, temporizador, calendario y respaldo local.
-- `manifest.json` y `service-worker.js`: instalación y funcionamiento básico sin conexión.
+- `index.html`: estructura y pantallas.
+- `style.css`: diseño adaptable, temas y animaciones.
+- `app.js`: biblioteca, rutinas, sesiones, temporizador, calendario, progreso y respaldo local.
+- `manifest.json` y `service-worker.js`: instalación y caché básica para uso sin conexión.
 - `icon.svg`: icono de la app.
 
 ## Publicar gratis con GitHub Pages
-1. Crea una cuenta o inicia sesión en https://github.com/.
-2. Crea un repositorio nuevo, por ejemplo `zulyfit`.
-3. Sube **todos** los archivos de esta carpeta a la raíz del repositorio.
+1. Descomprime `ZulyFit_proyecto_v2.zip`.
+2. Abre la carpeta `ZulyFit`.
+3. Sube **el contenido de esa carpeta** a la raíz del repositorio GitHub (debe quedar `index.html` en la raíz).
 4. En el repositorio abre **Settings → Pages**.
-5. En **Build and deployment**, elige **Deploy from a branch**; selecciona `main` y `/ (root)`, y guarda.
-6. Espera a que GitHub Pages publique el sitio. La dirección será similar a `https://TU-USUARIO.github.io/zulyfit/`.
-7. Abre esa dirección en Chrome desde el teléfono. Usa el menú ⋮ → **Instalar app** o **Añadir a pantalla de inicio**.
+5. En **Build and deployment**, elige **Deploy from a branch**, selecciona `main` y `/(root)`, y guarda.
+6. Cuando termine la publicación, abre la dirección de GitHub Pages en Chrome.
+7. En el teléfono usa el menú de Chrome → **Instalar app** o **Añadir a pantalla de inicio**.
 
-## Importante
-- Los datos se guardan localmente en el navegador/dispositivo. No hay cuentas ni sincronización en la nube.
-- Usa **Ajustes → Exportar mis datos** para guardar un respaldo e **Importar respaldo** para recuperarlo.
-- La hora de recordatorio es una preferencia guardada; esta versión no manda notificaciones automáticas.
-- Para actualizar la app, reemplaza los archivos del repositorio. Si el teléfono conserva una versión antigua, cierra y vuelve a abrir la app o borra los datos del sitio.
-- El contenido propone ejercicios generales de bajo impacto y se puede editar. Ajusten repeticiones y descansos según comodidad; detengan la sesión si aparece dolor o malestar.
+## Datos y privacidad
+- Rutinas, preferencias y sesiones se guardan en el almacenamiento local del navegador/dispositivo.
+- No hay cuentas ni sincronización automática entre dispositivos.
+- Usa **Progreso → Exportar mis datos** para crear un respaldo e **Ajustes → Importar respaldo** para recuperarlo.
+- Al actualizar el repositorio, no uses el botón de restablecer datos en la aplicación. La migración conserva los datos locales existentes.
+- La hora de recordatorio queda guardada como preferencia; esta versión no envía notificaciones automáticas.
+
+## Nota sobre las animaciones
+Las tarjetas incluyen iconos animados como apoyo visual y texto de técnica. No son videos ni animaciones anatómicas completas; realiza cada movimiento de forma cómoda y detente si aparece dolor o malestar.
