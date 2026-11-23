@@ -43,3 +43,7 @@ La biblioteca incluye una guía visual 3D procedural con selección de entrenado
 
 ## Guía 3D animada
 La demostración usa Three.js desde CDN; requiere conexión a internet y abrirse mediante GitHub Pages o un servidor local (no directamente desde el archivo ZIP). Incluye movimientos articulados orientativos y controles de pausa, reinicio y velocidad.
+
+
+### Actualizar desde una versión anterior
+Esta versión cambia la caché del service worker a zulyfit-v4 para evitar que el navegador conserve una copia antigua de trainer3d.js. Después de publicar, recarga la página; si sigue mostrando la versión anterior, cierra la pestaña instalada y vuelve a abrir GitHub Pages.
