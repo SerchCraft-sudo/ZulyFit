@@ -99,6 +99,14 @@
         <p class="hint">La hora queda guardada como preferencia. Esta versión no envía notificaciones automáticas.</p>
         <button id="saveSettings" class="button full">Guardar cambios</button>
       </div>
+      <div class="panel trainer-settings">
+        <h3>Tu entrenador virtual</h3>
+        <p class="hint">Elige quién te acompañará en las demostraciones. Puedes cambiarlo cuando quieras.</p>
+        <div class="trainer-choices">
+          <button type="button" class="trainer-choice" data-trainer-choice="female"><span>♀</span><strong>Entrenadora</strong><small>Guía femenina</small></button>
+          <button type="button" class="trainer-choice" data-trainer-choice="male"><span>♂</span><strong>Entrenador</strong><small>Guía masculina</small></button>
+        </div>
+      </div>
       <div class="panel">
         <h3>Tus datos</h3>
         <p class="hint">Tus rutinas y sesiones se guardan en este navegador. Para usar los mismos datos en otro dispositivo, exporta tus datos y conserva el archivo.</p>
@@ -139,7 +147,17 @@
     <button id="finishSession" class="button full">Terminar y guardar sesión</button>
   </dialog>
 
+  <dialog id="trainerDialog" class="dialog trainer-dialog">
+    <div class="dialog-head"><div><p class="eyebrow">GUÍA VISUAL 3D</p><h2 id="trainerExerciseName">Demostración</h2></div><button id="trainerClose" class="icon-button" aria-label="Cerrar">×</button></div>
+    <div class="trainer-stage"><canvas id="trainerCanvas" aria-label="Entrenador virtual animado en 3D"></canvas><span class="trainer-stage-tag">ZULYFIT · 3D</span></div>
+    <div class="trainer-controls">
+      <div><strong id="trainerMotionLabel">Movimiento controlado</strong><p id="trainerExerciseTip" class="hint">Sigue el movimiento con calma.</p></div>
+      <div class="trainer-choices compact"><button type="button" class="trainer-choice" data-trainer-choice="female">♀ <small>Ella</small></button><button type="button" class="trainer-choice" data-trainer-choice="male">♂ <small>Él</small></button></div>
+    </div>
+    <p class="trainer-disclaimer">Animación orientativa: adapta el rango a tu comodidad y detente si sientes dolor.</p>
+  </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
+  <script type="module" src="trainer3d.js"></script>
 </body>
 </html>

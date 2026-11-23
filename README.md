@@ -36,3 +36,6 @@ Aplicación web instalable (PWA) para organizar rutinas en casa, consultar ejerc
 
 ## Nota sobre las animaciones
 Las tarjetas incluyen iconos animados como apoyo visual y texto de técnica. No son videos ni animaciones anatómicas completas; realiza cada movimiento de forma cómoda y detente si aparece dolor o malestar.
+
+## Entrenadores virtuales 3D
+La biblioteca incluye una guía visual 3D procedural con selección de entrenadora o entrenador. En cada ejercicio aparece el botón **Ver demostración 3D**; durante una rutina también aparece **Ver guía 3D**. La selección se conserva en el navegador. La escena utiliza Three.js desde jsDelivr, por lo que la primera carga de las demostraciones requiere conexión a internet. Las animaciones son demostrativas y no sustituyen indicaciones profesionales de técnica.
