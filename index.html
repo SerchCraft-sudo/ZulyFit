@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f04491">
+  <meta name="description" content="ZulyFit: rutinas en casa, a tu ritmo.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <title>ZulyFit</title>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="ZulyFit inicio"><span class="brand-mark">Z</span><span>Zuly<span class="pink">Fit</span></span></a>
+    <button id="installBtn" class="button button-small hidden">Instalar app</button>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">TU ESPACIO · TU RITMO</p>
+        <h1>Hola, <span id="helloName">Zuly</span> <span class="pink">♥</span></h1>
+        <p class="muted">Un ratito para moverte, ganar fuerza y sentirte bien.</p>
+      </div>
+      <div class="hero-sticker" aria-hidden="true">✦</div>
+    </section>
+
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" data-view="home">Inicio</button>
+      <button class="tab" data-view="routines">Rutinas</button>
+      <button class="tab" data-view="calendar">Calendario</button>
+      <button class="tab" data-view="progress">Progreso</button>
+      <button class="tab" data-view="settings">Ajustes</button>
+    </nav>
+
+    <section id="homeView" class="view">
+      <div class="section-heading"><div><p class="eyebrow">SEMANA EN MOVIMIENTO</p><h2>Tu semana</h2></div><span class="pill" id="weekCount">0 sesiones</span></div>
+      <div class="week-strip" id="weekStrip"></div>
+      <div class="section-heading"><div><p class="eyebrow">A TU ELECCIÓN</p><h2>Empieza cuando quieras</h2></div></div>
+      <div id="homeRoutines" class="routine-grid"></div>
+      <div class="note-card"><span class="note-icon">♡</span><div><strong>Recuerda</strong><p>Descansar también cuenta. Ajusta cada ejercicio a cómo te sientas hoy.</p></div></div>
+    </section>
+
+    <section id="routinesView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">PERSONALIZA TU PLAN</p><h2>Tus rutinas</h2></div><button id="addRoutineBtn" class="button">＋ Nueva rutina</button></div>
+      <div id="routineList" class="routine-list"></div>
+    </section>
+
+    <section id="calendarView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">CONSTANCIA SIN PRESIÓN</p><h2>Calendario</h2></div></div>
+      <div class="calendar-card">
+        <div class="calendar-head"><button id="prevMonth" class="icon-button" aria-label="Mes anterior">‹</button><h3 id="monthLabel"></h3><button id="nextMonth" class="icon-button" aria-label="Mes siguiente">›</button></div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <p class="legend"><span></span> Día con actividad guardada</p>
+      </div>
+      <div id="calendarDetails" class="note-card"><span class="note-icon">♡</span><div><strong>Elige un día</strong><p>Consulta aquí tus sesiones guardadas.</p></div></div>
+    </section>
+
+    <section id="progressView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">CADA PASITO CUENTA</p><h2>Tu progreso</h2></div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><span>Sesiones guardadas</span><strong id="totalSessions">0</strong></div>
+        <div class="stat-card"><span>Esta semana</span><strong id="thisWeek">0</strong></div>
+        <div class="stat-card"><span>Minutos activos</span><strong id="totalMinutes">0</strong></div>
+      </div>
+      <h3 class="subheading">Actividad reciente</h3>
+      <div id="historyList" class="history-list"></div>
+      <button id="exportBtn" class="button button-outline full">Exportar mis datos</button>
+    </section>
+
+    <section id="settingsView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">A TU MANERA</p><h2>Ajustes</h2></div></div>
+      <div class="panel">
+        <label for="nameInput">¿Cómo te llamamos?</label>
+        <input id="nameInput" maxlength="24" placeholder="Tu nombre">
+        <label for="reminderInput">Hora sugerida para tu recordatorio</label>
+        <input id="reminderInput" type="time">
+        <p class="hint">La hora queda guardada como preferencia. Esta versión no envía notificaciones automáticas.</p>
+        <button id="saveSettings" class="button full">Guardar cambios</button>
+      </div>
+      <div class="panel">
+        <h3>Tus datos</h3>
+        <p class="hint">Tus rutinas y sesiones se guardan en este navegador. Para usar los mismos datos en otro dispositivo, exporta tus datos y conserva el archivo.</p>
+        <label class="button button-outline full file-label">Importar respaldo<input id="importInput" type="file" accept="application/json"></label>
+        <button id="resetBtn" class="button button-danger full">Restablecer datos de ejemplo</button>
+      </div>
+      <p class="footer-note">ZulyFit · Hecho con cariño para moverte a tu ritmo.</p>
+    </section>
+  </main>
+
+  <dialog id="routineDialog" class="dialog">
+    <form method="dialog" id="routineForm">
+      <div class="dialog-head"><h2 id="dialogTitle">Nueva rutina</h2><button class="icon-button" value="cancel" aria-label="Cerrar">×</button></div>
+      <label for="routineName">Nombre</label><input id="routineName" required maxlength="40" placeholder="Ej. Brazos y abdomen">
+      <label for="routineFocus">Enfoque</label><input id="routineFocus" maxlength="50" placeholder="Ej. Tren superior">
+      <div id="exerciseEditor"></div>
+      <button type="button" id="addExerciseBtn" class="button button-outline full">＋ Añadir ejercicio</button>
+      <div class="dialog-actions"><button class="button button-outline" value="cancel">Cancelar</button><button id="saveRoutineBtn" class="button" value="save">Guardar</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="sessionDialog" class="dialog session-dialog">
+    <div class="dialog-head"><div><p class="eyebrow">VAMOS A TU RITMO</p><h2 id="sessionTitle">Rutina</h2></div><button id="closeSession" class="icon-button" aria-label="Cerrar">×</button></div>
+    <div class="session-progress"><div id="sessionBar"></div></div>
+    <p id="sessionCount" class="muted small">0 de 0 ejercicios completados</p>
+    <div id="sessionExercises"></div>
+    <div class="timer-card"><div><span class="eyebrow">DESCANSO</span><strong id="timerDisplay">00:30</strong></div><div class="timer-actions"><button id="timerStart" class="button button-outline">Iniciar</button><button id="timerReset" class="icon-button">↻</button></div></div>
+    <button id="finishSession" class="button full">Terminar y guardar sesión</button>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
